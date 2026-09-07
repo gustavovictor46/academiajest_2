@@ -1,4 +1,4 @@
-const Turma = require('../src/turma');
+import Turma from '../src/turma.js'
 
 describe('Turma', () => {
     let turma;

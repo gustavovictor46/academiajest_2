@@ -1,27 +1,27 @@
-const { matricularAluno } = require('../src/matricula');
+import { matricularAluno } from '../src/matricula.js';
 
 describe('matricularAluno', () => {
     describe('idades válidas', () => {
         it('deve aceitar uma idade no início da faixa permitida (12 anos)', () => {
-            expect(matricularAluno(12, 'José')).toBe(true);
+            expect(matricularAluno(12, 'José')).toBe('Sucesso! Aluno matriculado com 12 anos.');
         });
 
         it('deve aceitar uma idade no início da faixa permitida (25 anos)', () => {
-            expect(matricularAluno(25, 'Mário')).toBe(true);
+            expect(matricularAluno(25, 'Mário')).toBe('Sucesso! Aluno matriculado com 25 anos.');
         });
 
         it('deve aceitar uma idade no início da faixa permitida (100 anos)', () => {
-            expect(matricularAluno(100, 'Ana')).toBe(true);
+            expect(matricularAluno(100, 'Ana')).toBe('Sucesso! Aluno matriculado com 100 anos.');
         });
     });
 
     describe('idades inválidas (fora da faixa)', () => {
         it('deve recusar a matrícula para idade menor que 12 anos', () => {
-            expect(matricularAluno(11, 'Carlos')).toBe(false);
+            expect(() => matricularAluno(11, 'Carlos')).toThrow('Idade fora da faixa permitida (12 a 100 anos)');
         });
 
         it('deve recusar a matrícula para idade maior que 100 anos', () => {
-            expect(matricularAluno(105, 'Jéssica')).toBe(false);
+            expect(() => matricularAluno(105, 'Jéssica')).toThrow('Idade fora da faixa permitida (12 a 100 anos)');
         });
     });
 
@@ -30,10 +30,10 @@ describe('matricularAluno', () => {
             expect(() => matricularAluno(11, 'Courtney')).toThrow('Idade fora da faixa permitida (12 a 100 anos)');
         });
         it('deve aceitar a matrícula para 12 anos (limite inferior exato)', () => {
-            expect(() => matricularAluno(12, 'Bill')).toBe(true);
+            expect(matricularAluno(12, 'Bill')).toBe('Sucesso! Aluno matriculado com 12 anos.');
         });
         it('deve aceitar a matrícula para 100 anos (limite superior exato)', () => {
-            expect(() => matricularAluno(100, 'Akira')).toBe(true);
+            expect( matricularAluno(100, 'Akira')).toBe('Sucesso! Aluno matriculado com 100 anos.');
         });
         it('deve recusar a matrícula para 101 anos (limite superior +1)', () => {
             expect(() => matricularAluno(101, 'João')).toThrow('Idade fora da faixa permitida (12 a 100 anos)');
@@ -62,7 +62,7 @@ describe('matricularAluno', () => {
 
         describe('validação nome do aluno', () => {
             it('deve aceitar a matrícula quando o nome estiver preenchido corretamente', () => {
-                expect(() => matricularAluno(20, 'Arthur')).toBe(true);
+                expect(matricularAluno(20, 'Arthur')).toBe('Sucesso! Aluno matriculado com 20 anos.');
             });
             it('deve recusar o nome quando for uma string vazia', () => {
                 expect(() => matricularAluno(20, '')).toThrow('Nome inválido: Informe um nome válido');
@@ -77,3 +77,5 @@ describe('matricularAluno', () => {
                 expect(() => matricularAluno(20, null)).toThrow('Nome inválido: Informe um nome válido');
             });
         });
+    });
+});
